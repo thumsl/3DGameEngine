@@ -31,21 +31,21 @@ public class Shader {
 		addProgram(text, GL_FRAGMENT_SHADER);
 	}
 	
-	public void compileShader() {
-		glLinkProgram(program);
-		
-		if (glGetProgrami(program, GL_LINK_STATUS) == 0) {
-			System.err.println(glGetShaderInfoLog(program, 1024));
-			System.exit(1);
-		}
-		
-		glValidateProgram(program);
-		
-		if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0) {
-			System.err.println(glGetShaderInfoLog(program, 1024));
-			System.exit(1);
-		}
+public void compileShader() {
+	glLinkProgram(program);
+	
+	if(glGetProgrami(program, GL_LINK_STATUS) == 0) {
+		System.err.println(glGetShaderInfoLog(program, 1024));
+		System.exit(1);
 	}
+
+	glValidateProgram(program);
+	
+	if(glGetProgrami(program, GL_VALIDATE_STATUS) == 0) {
+		System.err.println(glGetShaderInfoLog(program, 1024));
+		System.exit(1);
+	}
+}
 	
 	private void addProgram(String text, int type) {
 		int shader = glCreateShader(type);

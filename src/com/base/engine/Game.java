@@ -17,7 +17,7 @@ public class Game {
 		mesh.addVertices(data);
 		
 		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
-		shader.addVertexShader(ResourceLoader.loadShader("basicFragment.fs"));
+		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
 		shader.compileShader();
 	}
 	
