@@ -1,7 +1,5 @@
 package com.base.engine;
 
-import org.lwjgl.opengl.Display;
-
 public class Camera {
 	public static final Vector3f yAxis = new Vector3f(0, 1, 0);
 	
@@ -26,15 +24,15 @@ public class Camera {
 		float movAmount = (float) (10 * Time.getDelta());
 		float rotAmount = (float) (100 * Time.getDelta());
 		
-		if (Input.getKey(Input.KEY_W)) 
+		if (Input.getMouse(0)) 
 			move(getForward(), movAmount);
-		if (Input.getKey(Input.KEY_S))
+		if (Input.getMouse(1))
 			move(getForward(), -movAmount);
-		if (Input.getKey(Input.KEY_A))
-			move(getLeft(), movAmount);
-		if (Input.getKey(Input.KEY_D))
-			move(getRight(), movAmount);
-	
+//		if (Input.getKey(Input.KEY_A))
+//			move(getLeft(), movAmount);
+//		if (Input.getKey(Input.KEY_D))
+//			move(getRight(), movAmount);
+//	
 		if(Input.getKey(Input.KEY_UP))
 			rotateX(-rotAmount);
 		if(Input.getKey(Input.KEY_DOWN))
@@ -43,11 +41,6 @@ public class Camera {
 			rotateY(-rotAmount);
 		if(Input.getKey(Input.KEY_RIGHT))
 			rotateY(rotAmount);
-	
-		//System.out.println( ((Input.getMousePosition().getY()) / Display.getHeight()) * 360);
-//		move(getForward(), -((Input.getMousePosition().getY()) / Display.getHeight()));
-//		move(getLeft(), ((Input.getMousePosition().getX()) / Display.getWidth()));
-//		move(getRight(), -((Input.getMousePosition().getX()) / Display.getWidth()));
 	}
 	
 	public void move(Vector3f dir, float value) {
