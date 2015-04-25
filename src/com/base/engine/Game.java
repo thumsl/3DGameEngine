@@ -1,12 +1,16 @@
 package com.base.engine;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 public class Game {
 	private Mesh mesh;
 	private Shader shader;
 	private Transform transform;
+	
+	private boolean left = false;
+	private boolean right = false;
+	private boolean up = false;
+	private boolean down = false;
 	
 	public Game() {
 		mesh = ResourceLoader.loadMesh("box.obj");
@@ -35,18 +39,30 @@ public class Game {
 	}
 	
 	public void input() {
-		if (Input.getKeyDown(Keyboard.KEY_UP))
-			System.out.println("We've just pressed up!");
-		if (Input.getKeyUp(Keyboard.KEY_UP))
-			System.out.println("We've just released up!");
+		if (Input.getKeyDown(Input.KEY_A))
+			left = true;
+		if (Input.getKeyUp(Input.KEY_A))
+			left = false;
 		
-		if (Input.getMouseDown(0))
-			System.out.println("We've just right clicked at " + Input.getMousePosition());
-		if (Input.getMouseUp(0))
-			System.out.println("We've just released right mouse button!");
+		if (Input.getKeyDown(Input.KEY_D))
+			right = true;
+		if (Input.getKeyUp(Input.KEY_D))
+			right = false;
+		
+		if (Input.getKeyDown(Input.KEY_W))
+			up = true;
+		if (Input.getKeyUp(Input.KEY_W))
+			up = false;		
+		
+		if (Input.getKeyDown(Input.KEY_S))
+			down = true;
+		if (Input.getKeyUp(Input.KEY_S))
+			down = false;
 	}
 	
 	float temp = 0.0f;
+	float xRot = 0.0f;
+	float yRot = 0.0f;
 	
 	public void update() {
 		temp += Time.getDelta();
@@ -57,11 +73,23 @@ public class Game {
 		//transform.setScale(0.25f, 0.25f, 0.25f);
 		//transform.setScale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 		
-		float xMouse = Input.getMousePosition().getX();
-		float yMouse = Input.getMousePosition().getY();
-		float yRot = (xMouse / Display.getWidth()) * 360;
-		float xRot = (yMouse / Display.getHeight()) * 360;
-		transform.setRotation(xRot, yRot, 0);
+		// Mouse movement
+		//float xMouse = Input.getMousePosition().getX();
+		//float yMouse = Input.getMousePosition().getY();
+		//float yRot = (xMouse / Display.getWidth()) * 360;
+		//float xRot = (yMouse / Display.getHeight()) * 360;
+		
+		// Keyboard Movement
+		if (left)
+			xRot -= 0.05f;
+		if (right)
+			xRot += 0.05f;
+		if (up)
+			yRot += 0.05f;
+		if (down)
+			yRot -= 0.05f;
+		
+		transform.setRotation(yRot, xRot, 0);
 	}
 	
 	public void render() {
