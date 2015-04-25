@@ -1,11 +1,10 @@
 package com.base.engine;
 
-import org.lwjgl.opengl.Display;
-
 public class Game {
 	private Mesh mesh;
 	private Shader shader;
 	private Transform transform;
+	private Camera camera;
 	
 	private boolean left = false;
 	private boolean right = false;
@@ -15,6 +14,7 @@ public class Game {
 	public Game() {
 		mesh = ResourceLoader.loadMesh("box.obj");
 		shader = new Shader();
+		camera = new Camera();
 		
 //		Vertex[] vertices =  new Vertex[] {new Vertex(new Vector3f(-1, -1, 0)),
 //									   new Vertex(new Vector3f(0, 1, 0)),
@@ -30,6 +30,7 @@ public class Game {
 		
 		transform = new Transform();
 		transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
+		transform.setCamera(camera);
 		
 		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
 		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
@@ -39,6 +40,8 @@ public class Game {
 	}
 	
 	public void input() {
+		camera.input();
+		
 		if (Input.getKeyDown(Input.KEY_A))
 			left = true;
 		if (Input.getKeyUp(Input.KEY_A))
@@ -81,13 +84,13 @@ public class Game {
 		
 		// Keyboard Movement
 		if (left)
-			xRot -= 0.05f;
+			xRot -= 100 * Time.getDelta();
 		if (right)
-			xRot += 0.05f;
+			xRot += 100 * Time.getDelta();
 		if (up)
-			yRot += 0.05f;
+			yRot += 100 * Time.getDelta();
 		if (down)
-			yRot -= 0.05f;
+			yRot -= 100 * Time.getDelta();
 		
 		transform.setRotation(yRot, xRot, 0);
 	}

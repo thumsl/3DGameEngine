@@ -7,7 +7,7 @@ public class Quaternion {
 	private float w;
 	
 	public Quaternion(float x, float y, float z, float w) {
-		this.w = x;
+		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = w;
