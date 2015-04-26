@@ -11,7 +11,7 @@ public class Vector3f {
 		this.z = z;
 	} 
 
-	public float lenght() {
+	public float length() {
 		return (float)Math.sqrt(x*x + y*y + z*z);
 	}
 
@@ -20,13 +20,9 @@ public class Vector3f {
 	}
 	
 	public Vector3f normalize() {
-		float lenght = lenght();
+		float length = length();
 		
-		x /= lenght;
-		y /= lenght;
-		z /= lenght;
-		
-		return this;
+		return new Vector3f(x / length, y / length, z / length);
 	}
 	
 	public Vector3f rotate(float angle, Vector3f axis) {
@@ -80,6 +76,11 @@ public class Vector3f {
 	
 	public Vector3f div(float r) {
 		return new Vector3f(x / r, y / r, z / r);
+	}
+	
+	public Vector3f abs()
+	{
+		return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
 	}
 	
 	public Vector3f cross(Vector3f r) {

@@ -107,7 +107,13 @@ public class Matrix4f {
 	}
 	
 	public float[][] getM() {
-		return m;
+		float[][] res = new float[4][4];
+		
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				res[i][j] = m[i][j];
+		
+		return res;
 	}
 	
 	public float get(int x, int y) {
