@@ -32,8 +32,8 @@ public class Game {
 		
 		mesh.addVertices(vertices, indices, true);
 		
-		transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
-		transform.setCamera(camera);
+		Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
+		Transform.setCamera(camera);
 		
 		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
 		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight (new Vector3f(1,1,1), 0.8f), new Vector3f(1,1,1)));
@@ -72,7 +72,7 @@ public class Game {
 		float movAmt = (float) (10 * Time.getDelta());
 		
 		//float sinTemp = (float)Math.sin(temp);
-		transform.setTranslation(0, 0, 5);
+		transform.setTranslation(0, 0, 10);
 		//transform.setRotation(0, sinTemp*180, 0);
 		//transform.setScale(0.25f, 0.25f, 0.25f);
 		//transform.setScale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
