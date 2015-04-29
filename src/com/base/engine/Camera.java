@@ -22,7 +22,7 @@ public class Camera {
 	
 	public void input()
 	{
-		float sensitivity = 0.5f;
+		float sensitivity = 0.2f;
 		
 		if(Input.getKey(Input.KEY_ESCAPE)) {
 			Input.setCursor(true);
