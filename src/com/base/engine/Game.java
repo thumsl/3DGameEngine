@@ -12,15 +12,14 @@ public class Game {
 	private boolean up = false;
 	private boolean down = false;
 	
-	PointLight pLight1 = new PointLight(new BaseLight(new Vector3f(1, 0, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 5f), 10);
-	PointLight pLight2 = new PointLight(new BaseLight(new Vector3f(0, 1, 1), 0.8f), new Attenuation(0, 0, 0.7f), new Vector3f(2, 0, 7f), 10);
+	PointLight pLight1 = new PointLight(new BaseLight(new Vector3f(1,0.5f,0), 0.8f), new Attenuation(0,0,1), new Vector3f(-2,0,5f), 10);
+	PointLight pLight2 = new PointLight(new BaseLight(new Vector3f(0,0.5f,1), 0.8f), new Attenuation(0,0,1), new Vector3f(2,0,7f), 10);
 	
 	SpotLight sLight1 = new SpotLight(new PointLight(new BaseLight(new Vector3f(0,1f,1f), 0.8f), new Attenuation(0,0,0.1f), new Vector3f(-2,0,5f), 30),
-			  new Vector3f(1,1,1), 0.1f);
+			  new Vector3f(1,1,1), 0.7f);
 	
 	public Game() {
-		mesh =  new Mesh(); 
-		material = new Material(ResourceLoader.loadTexture("grid.png"), new Vector3f(1, 1, 1), 1, 8);
+		material = new Material(new Texture("grid.png"), new Vector3f(1, 1, 1), 1, 8);
 		shader = PhongShader.getInstance();
 		camera = new Camera();
 		transform = new Transform();
@@ -36,8 +35,8 @@ public class Game {
 //				1, 2, 0 };
 //		Pyramid ^
 		
-		float fieldDepth = 20.0f;
-		float fieldWidth = 20.0f;
+		float fieldDepth = 10.0f;
+		float fieldWidth = 10.0f;
 		
 		Vertex[] vertices = new Vertex[] { 	new Vertex( new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f(0.0f, 0.0f)),
 											new Vertex( new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 10f)),
@@ -47,13 +46,13 @@ public class Game {
 		int indices[] = { 0, 1, 2, 2, 1, 3};
 		// Plane ^
 		
-		mesh.addVertices(vertices, indices, true);
+		mesh  = new Mesh(vertices, indices, true);
 		
 		Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
 		Transform.setCamera(camera);
 		
 		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight (new Vector3f(1,0.6f,0.1f), 0.8f), new Vector3f(0,-0.1f,0)));
+		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(1,1,1), 0.1f), new Vector3f(1,1,1)));
 
 		PhongShader.setPointLights(new PointLight[] {pLight1, pLight2});
 		PhongShader.setSpotLights(new SpotLight[] {sLight1});

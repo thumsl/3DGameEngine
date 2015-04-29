@@ -3,6 +3,8 @@ package com.base.engine;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.HashMap;
 
 public class Shader {
@@ -51,22 +53,34 @@ public class Shader {
 		addProgram(text, GL_FRAGMENT_SHADER);
 	}
 	
-public void compileShader() {
-	glLinkProgram(program);
-	
-	if(glGetProgrami(program, GL_LINK_STATUS) == 0) {
-		System.err.println(glGetShaderInfoLog(program, 1024));
-		System.exit(1);
+	public void addVertexShaderFromFile(String text) {
+		addProgram(loadShader(text), GL_VERTEX_SHADER);
 	}
-
-	glValidateProgram(program);
 	
-	if(glGetProgrami(program, GL_VALIDATE_STATUS) == 0) {
-		System.err.println(glGetShaderInfoLog(program, 1024));
-		System.exit(1);
+	public void addGeometryShaderFromFile(String text) {
+		addProgram(loadShader(text), GL_GEOMETRY_SHADER);
 	}
-}
 	
+	public void addFragmentShaderFromFile(String text) {
+		addProgram(loadShader(text), GL_FRAGMENT_SHADER);
+	}
+	
+	public void compileShader() {
+		glLinkProgram(program);
+		
+		if(glGetProgrami(program, GL_LINK_STATUS) == 0) {
+			System.err.println(glGetShaderInfoLog(program, 1024));
+			System.exit(1);
+		}
+	
+		glValidateProgram(program);
+		
+		if(glGetProgrami(program, GL_VALIDATE_STATUS) == 0) {
+			System.err.println(glGetShaderInfoLog(program, 1024));
+			System.exit(1);
+		}
+	}
+		
 	private void addProgram(String text, int type) {
 		int shader = glCreateShader(type);
 		
@@ -86,6 +100,26 @@ public void compileShader() {
 		glAttachShader(program, shader);
 	}
 
+	private static String loadShader(String fileName) {
+		StringBuilder shaderSource = new StringBuilder();
+		BufferedReader shaderReader = null;
+		
+		try {
+			shaderReader = new BufferedReader(new FileReader("./res/shaders/" + fileName));
+			String line;
+			while ((line = shaderReader.readLine()) != null)
+				shaderSource.append(line).append("\n");
+			
+			shaderReader.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		return shaderSource.toString();
+	}
+	
 	public void setUniformi(String uniformName, int value) {
 		glUniform1i(uniforms.get(uniformName), value);
 	}
